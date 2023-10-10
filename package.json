@@ -1,0 +1,11 @@
+{
+  "name": "bot-template",
+  "version": "1.0.0",
+  "description": "The template is created by Ozodbek Khayitboyev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ozodbek Khayitboyev",
+  "license": "ISC"
+}
