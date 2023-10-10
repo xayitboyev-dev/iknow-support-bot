@@ -4,7 +4,8 @@
   "description": "The template is created by Ozodbek Khayitboyev",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/index.js",
+    "cluster": "node ./src/cluster.js"
   },
   "author": "Ozodbek Khayitboyev",
   "license": "ISC",
