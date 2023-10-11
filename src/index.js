@@ -13,9 +13,7 @@ bot.use(session());
 bot.use(stage.start(onStart).middleware());
 bot.use(checkUser);
 
-// handle main scene
-require("./scenes/main");
-
+// run bot
 if (process.env.NODE_ENV === 'production') {
     require("./webhook");
 } else {
