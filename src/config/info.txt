@@ -2,5 +2,6 @@ Create a ".env" file in this directory
 
 
 BOT_TOKEN="12345687:asdfghkj"
+MONGO_URI="mongodb://localhost:27017/iknow-support"
 NODE_ENV="development"
 PORT="8080"
