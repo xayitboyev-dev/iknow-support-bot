@@ -10,8 +10,14 @@ const userSchema = new Schema({
     username: {
         type: String,
     },
+    image: {
+        type: String,
+    },
+    ielts: {
+        type: String,
+    },
     phone: {
-        type: Number,
+        type: String,
     },
     id: {
         type: Number,

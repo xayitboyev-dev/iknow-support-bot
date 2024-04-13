@@ -1,10 +1,22 @@
 const { Markup } = require('telegraf');
 
 exports.main = Markup.keyboard([
-    ["📤 Xabar tarqatish", "📊 Statistika"],
-    ["👤 Userga xabar", "🏠 Client"]
+    ["📤 Xabar tarqatish", "👤 Userga xabar"],
+    ["🧑‍🏫 O'qituvchilar"],
+    ["📊 Statistika", "🏠 Client"]
+]).resize();
+
+exports.teachers = (teachers) => Markup.keyboard([
+    ["🆕 Yangi qo'shish", "🔙 Bekor qilish"],
+    teachers.map((item) => item.name)
+]).resize();
+
+exports.teacherSingle = Markup.keyboard([
+    "✏️ Tahrirlash",
+    "🗑 O'chirish",
+    "◀️ Orqaga"
 ]).resize();
 
 exports.cancel = Markup.keyboard([
     ["🔙 Bekor qilish"]
-]);
+]).resize();

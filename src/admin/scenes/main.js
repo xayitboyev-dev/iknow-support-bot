@@ -16,6 +16,10 @@ scene.hears("👤 Userga xabar", (ctx) => {
     ctx.scene.enter('admin:sendTo');
 });
 
+scene.hears("🧑‍🏫 O'qituvchilar", (ctx) => {
+    ctx.scene.enter('admin:teachers');
+});
+
 scene.hears("📊 Statistika", async (ctx) => {
     const activeUsers = await User.count({ active: true });
     const nonActiveUsers = await User.count({ active: false });

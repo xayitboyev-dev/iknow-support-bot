@@ -1,10 +1,9 @@
 const { Scenes: { BaseScene } } = require('telegraf');
 const scene = new BaseScene('admin:sendTo');
 const { cancel } = require('../keyboards/button');
-const auth = require("../middlewares/auth");
 const User = require('../../models/User');
 
-scene.enter(auth, async (ctx) => {
+scene.enter(async (ctx) => {
     ctx.reply('🆔 Kimga xabar yubormoqchisiz? Id raqamini yuboring', cancel);
 });
 

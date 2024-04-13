@@ -9,10 +9,6 @@ scene.enter((ctx) => {
     ctx.reply("🔝 Asosiy menyu", main);
 });
 
-scene.hears("Example Scene", (ctx) => {
-    ctx.scene.enter("example");
-});
-
 scene.on("message", (ctx) => {
     ctx.reply("🔽 Kerakli bo'limni tanlang.", main);
 });
