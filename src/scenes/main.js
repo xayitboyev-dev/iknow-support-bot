@@ -12,6 +12,10 @@ scene.enter(auth, (ctx) => {
 
 scene.use(auth);
 
+scene.hears("✏️ O'qituvchiga ariza qoldirish", (ctx) => {
+    ctx.scene.enter("teachers");
+});
+
 scene.on("message", (ctx) => {
     ctx.reply("🔽 Kerakli bo'limni tanlang.", main);
 });

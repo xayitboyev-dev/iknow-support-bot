@@ -3,6 +3,9 @@ const { Scenes: { Stage } } = require('telegraf');
 const stage = new Stage([
     require("./main"),
     require("./register"),
+    require("./teachers"),
+    require("./selectTime"),
+    require("./teacherSingle"),
     require("../admin/scenes/main"),
     require("../admin/scenes/sendMessage"),
     require("../admin/scenes/sendTo"),

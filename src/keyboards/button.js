@@ -1,9 +1,24 @@
 const { Markup } = require("telegraf");
+const { times } = require("../config/config.json");
+const getDates = require("../utils/getDates");
 
 exports.main = Markup.keyboard([
     "✏️ O'qituvchiga ariza qoldirish",
     "⚙️ Sozlamalar"
 ]).resize();
+
+exports.teachers = (teachers) => Markup.keyboard([
+    ["⏪ Orqaga"],
+    ...teachers.map((item) => [item.name])
+]).resize();
+
+exports.singleTeacher = () => {
+    return Markup.keyboard([["◀️ Orqaga"], getDates()]);
+};
+
+exports.selectTime = (lessons) => {
+    return Markup.keyboard(["◀️ Orqaga", ...times.map((item) => lessons.find((lesson) => lesson.time == item) ? item + " 🔴" : item + " 🟡")]);
+};
 
 exports.back = Markup.keyboard([
     "◀️ Orqaga",
