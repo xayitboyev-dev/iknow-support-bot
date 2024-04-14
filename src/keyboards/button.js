@@ -5,6 +5,29 @@ exports.main = Markup.keyboard([
     "⚙️ Sozlamalar"
 ]).resize();
 
-exports.example = Markup.keyboard([
-    "Go back",
+exports.back = Markup.keyboard([
+    "◀️ Orqaga",
+]).resize();
+
+exports.reEnter = Markup.keyboard([
+    "📲 Qayta kiritish",
+]).resize();
+
+exports.backMain = Markup.keyboard([
+    "⏪ Orqaga",
+]).resize();
+
+exports.empty = Markup.removeKeyboard();
+
+exports.phone = Markup.keyboard([
+    Markup.button.contactRequest("☎️ Telefon raqamni yuborish")
+]).resize();
+
+exports.levels = Markup.keyboard([
+    "Beginner",
+    "Elementary",
+    "Pre-Intermediate",
+    "Intermediate",
+    "Pre-IELTS",
+    "IELTS",
 ]).resize();

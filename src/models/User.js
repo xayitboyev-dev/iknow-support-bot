@@ -13,6 +13,9 @@ const userSchema = new Schema({
     image: {
         type: String,
     },
+    level: {
+        type: String,
+    },
     ielts: {
         type: String,
     },

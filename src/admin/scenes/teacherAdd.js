@@ -1,6 +1,6 @@
 const { Scenes: { WizardScene } } = require('telegraf');
 const User = require("../../models/User");
-const { cancel } = require("../../keyboards/button");
+const { cancel } = require("../keyboards/button");
 
 const steps = [
     (ctx) => {
@@ -56,6 +56,7 @@ const steps = [
         if (ctx.message?.photo && ctx.message.photo.length > 0) {
             ctx.scene.state.image = ctx.message.photo[ctx.message.photo.length - 1].file_id;
             ctx.scene.state.role = "TEACHER";
+            ctx.scene.state.id = Date.now();
 
             // save the new product on the database!
             try {

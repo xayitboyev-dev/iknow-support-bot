@@ -7,7 +7,7 @@ scene.enter(async (ctx) => {
     try {
         const teacher = ctx.scene.state;
 
-        ctx.replyWithPhoto(teacher.image, teacherSingle);
+        ctx.replyWithPhoto(teacher.image, { ...teacherSingle, caption: `<b>${teacher.first_name} ${teacher.last_name}</b>\n\n🔖 IELTS Score: ${teacher.ielts}\n☎️ Telefon: ${teacher.phone}\n🟢 Status: ${teacher.active ? "active" : "inactive"}`, parse_mode: "HTML" });
     } catch (error) {
         ctx.reply(error.message);
     };
@@ -24,7 +24,9 @@ scene.hears("✏️ Tahrirlash", (ctx) => {
 scene.hears("🗑 O'chirish", async (ctx) => {
     try {
         await User.findByIdAndDelete(ctx.scene.state._id);
+        
         ctx.reply("✅ O'qituvchi o'chirildi.");
+        ctx.scene.enter("admin:teachers");
     } catch (error) {
         ctx.reply(error.message);
     };

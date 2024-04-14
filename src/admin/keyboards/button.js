@@ -8,7 +8,7 @@ exports.main = Markup.keyboard([
 
 exports.teachers = (teachers) => Markup.keyboard([
     ["🆕 Yangi qo'shish", "🔙 Bekor qilish"],
-    teachers.map((item) => item.name)
+    ...teachers.map((item) => [item.name])
 ]).resize();
 
 exports.teacherSingle = Markup.keyboard([
