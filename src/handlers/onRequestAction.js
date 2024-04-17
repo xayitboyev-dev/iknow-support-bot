@@ -10,7 +10,7 @@ module.exports = async (ctx) => {
         // confirm the request
         if (data.startsWith("request_confirm_")) {
             // update the request
-            const user = await User.findByIdAndUpdate(id, { status: "activated" });
+            const user = await User.findByIdAndUpdate(id, { status: "activated", $unset: { teacher: "" } });
 
             if (!user) {
                 return ctx.deleteMessage();

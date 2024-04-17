@@ -57,13 +57,14 @@ const steps = [
 
             if (!needActivationRequest) {
                 ctx.scene.state.status = "activated";
+                delete ctx.scene.state.teacher;
             };
 
             try {
                 const request = await User.create(ctx.scene.state);
 
                 if (needActivationRequest) {
-                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.first_name} ${request.last_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.level}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.first_name || request.last_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
+                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.first_name} ${request.last_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.teacher}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.first_name || request.last_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
                     await ctx.reply("✅ Ma'lumotlaringiz yuborildi. Adminlar uni tasdiqlagandan so'ng botdan to'liq foydalanishingiz mumkin.", empty);
                 } else {
                     await ctx.reply("✅ Ma'lumotlaringiz saqlandi. Endi botdan to'liq foydalanishingiz mumkin.");

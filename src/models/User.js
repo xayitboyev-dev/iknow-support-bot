@@ -7,6 +7,7 @@ const userSchema = new Schema({
     username: String,
     level: String,
     phone: String,
+    teacher: String,
     id: {
         type: Number,
         unique: true,
@@ -36,7 +37,7 @@ const userSchema = new Schema({
     status: {
         type: String,
         enum: ["activated", "pending"],
-        function () {
+        function() {
             // Check if user role is TEACHER
             if (this.role === 'USER') return "pending";
         }
