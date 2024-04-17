@@ -5,11 +5,11 @@ const User = require("../models/User");
 
 scene.enter(async (ctx) => {
     try {
-        const users = await User.find({ role: "TEACHER" }).select("first_name last_name ielts image phone active").lean();
+        const users = await User.find({ role: "TEACHER", id: { $ne: null } }).select("first_name last_name ielts id").lean();
 
-        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, name: item.first_name + " " + item.last_name + " " + item.ielts }));
+        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.first_name + " " + item.last_name + " " + item.ielts }));
 
-        ctx.reply("🧑‍🏫 O'qituvchi tanlang:", teachers(ctx.scene.state.teachers));
+        ctx.reply("🧑‍🏫 Ustoz tanlang:", teachers(ctx.scene.state.teachers));
     } catch (error) {
         ctx.reply(error.message);
     };
@@ -20,9 +20,9 @@ scene.on("text", (ctx) => {
         const teacher = ctx.scene.state.teachers.find((item) => item.name === ctx.message.text);
 
         if (teacher) {
-            ctx.scene.enter("teacherSingle", teacher);
+            ctx.scene.enter("booking:teacherSingle", teacher);
         } else {
-            ctx.reply("❗️ O'qituvchi topilmadi.");
+            ctx.reply("❗️ Ustoz topilmadi.");
         };
     } catch (error) {
         ctx.reply(error.message);

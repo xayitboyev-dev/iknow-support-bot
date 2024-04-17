@@ -1,4 +1,10 @@
 {
+    "branches": [
+        "Telegraf",
+        "Gorizont",
+        "Oydin",
+        "iKNOW School"
+    ],
     "times": [
         "14:00",
         "14:30",
@@ -12,5 +18,12 @@
         "18:30",
         "19:00",
         "19:30"
-    ]
+    ],
+    "holidays": [
+        0,
+        6
+    ],
+    "nextDays": 3,
+    "needTeacherRequest": true,
+    "needActivationRequest": true
 }

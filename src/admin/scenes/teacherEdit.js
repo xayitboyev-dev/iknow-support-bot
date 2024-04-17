@@ -1,5 +1,6 @@
 const { Scenes: { WizardScene }, Markup } = require('telegraf');
 const User = require("../../models/User");
+const { branches } = require("../../config/config.json");
 
 const steps = [
     (ctx) => {
@@ -20,10 +21,20 @@ const steps = [
         if (ctx.message?.text) {
             ctx.scene.state.last_name = ctx.message.text;
 
-            ctx.reply("Ielts score kiriting. (example: 7.5)", Markup.keyboard([ctx.scene.state.teacher.ielts]).resize());
+            ctx.reply("Filial kiriting.", Markup.keyboard(branches).resize());
             ctx.wizard.next();
         } else {
             ctx.reply("❗️ Iltimos familiyani faqat harflarda kiriting.");
+        };
+    },
+    (ctx) => {
+        if (ctx.message?.text) {
+            ctx.scene.state.branch = ctx.message.text;
+
+            ctx.reply("Ielts score kiriting. (example: 7.5)", Markup.keyboard([ctx.scene.state.teacher.ielts]).resize());
+            ctx.wizard.next();
+        } else {
+            ctx.reply("❗️ Iltimos branchi quyidagi tugmalardan tanlang.");
         };
     },
     (ctx) => {
@@ -58,9 +69,9 @@ const steps = [
 
         // save the new product on the database!
         try {
-            const updatedTeacher = await User.findByIdAndUpdate(ctx.scene.state.teacher._id, ctx.scene.state, { new: true }).select("first_name last_name ielts phone image").lean();
+            const updatedTeacher = await User.findByIdAndUpdate(ctx.scene.state.teacher._id, ctx.scene.state, { new: true }).select("first_name last_name ielts active branch phone image").lean();
 
-            ctx.reply("✅ O'qituvchi tahrirlandi.");
+            ctx.reply("✅ Ustoz tahrirlandi.");
             ctx.scene.enter("admin:teacherSingle", updatedTeacher);
         } catch (error) {
             ctx.reply(error.message);

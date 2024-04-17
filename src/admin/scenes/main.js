@@ -16,7 +16,7 @@ scene.hears("👤 Userga xabar", (ctx) => {
     ctx.scene.enter('admin:sendTo');
 });
 
-scene.hears("🧑‍🏫 O'qituvchilar", (ctx) => {
+scene.hears("🧑‍🏫 Ustozlar", (ctx) => {
     ctx.scene.enter('admin:teachers');
 });
 

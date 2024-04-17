@@ -1,7 +1,8 @@
 const { Scenes: { WizardScene } } = require('telegraf');
 const { levels, empty, phone } = require("../keyboards/button");
 const { requestButton } = require("../keyboards/inline");
-const Request = require("../models/Request");
+const { needActivationRequest } = require("../config/config.json");
+const User = require("../models/User");
 
 const steps = [
     (ctx) => {
@@ -51,12 +52,24 @@ const steps = [
     async (ctx) => {
         if (ctx.message?.text || ctx.message?.contact?.phone_number) {
             ctx.scene.state.phone = ctx.message?.contact?.phone_number && "+" + ctx.message?.contact?.phone_number || (ctx.message.text.includes("+998") ? ctx.message.text : "+998" + ctx.message.text).split(" ").join("");
+            ctx.scene.state.username = ctx.from.username;
             ctx.scene.state.id = ctx.from.id;
 
+            if (!needActivationRequest) {
+                ctx.scene.state.status = "activated";
+            };
+
             try {
-                const request = await Request.create({ userId: ctx.from.id, data: ctx.scene.state });
-                await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.data.first_name} ${request.data.last_name}\n<b>🎓 Darajasi:</b> ${request.data.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.data.level}\n<b>☎️ Telefon:</b> ${request.data.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.data.id}">${request.data.first_name || request.data.last_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
-                await ctx.reply("✅ Ma'lumotlaringiz yuborildi. Adminlar uni tasdiqlagandan so'ng botdan to'liq foydalanishingiz mumkin.");
+                const request = await User.create(ctx.scene.state);
+
+                if (needActivationRequest) {
+                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.first_name} ${request.last_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.level}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.first_name || request.last_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
+                    await ctx.reply("✅ Ma'lumotlaringiz yuborildi. Adminlar uni tasdiqlagandan so'ng botdan to'liq foydalanishingiz mumkin.", empty);
+                } else {
+                    await ctx.reply("✅ Ma'lumotlaringiz saqlandi. Endi botdan to'liq foydalanishingiz mumkin.");
+                    ctx.scene.enter("main");
+                };
+
                 ctx.scene.leave();
             } catch (error) {
                 ctx.reply("Error: " + error.message);

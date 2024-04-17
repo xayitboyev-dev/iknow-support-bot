@@ -13,11 +13,12 @@ const lessonSchema = new Schema({
     },
     topic: {
         type: String,
-        maxLength: 1000
+        maxLength: 1000,
+        required: true,
     },
     status: {
         type: String,
-        enum: ["rejected", "confirmed", "pending"],
+        enum: ["pending", "rejected", "cancelled", "confirmed", "finished"],
         default: "pending"
     },
     date: {

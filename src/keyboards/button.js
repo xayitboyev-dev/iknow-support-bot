@@ -3,7 +3,12 @@ const { times } = require("../config/config.json");
 const getDates = require("../utils/getDates");
 
 exports.main = Markup.keyboard([
-    "✏️ O'qituvchiga ariza qoldirish",
+    "✏️ Ustoz darsiga yozilish",
+    "⚙️ Sozlamalar"
+]).resize();
+
+exports.teacherMain = Markup.keyboard([
+    "🔖 Darslar",
     "⚙️ Sozlamalar"
 ]).resize();
 
@@ -12,13 +17,27 @@ exports.teachers = (teachers) => Markup.keyboard([
     ...teachers.map((item) => [item.name])
 ]).resize();
 
-exports.singleTeacher = () => {
-    return Markup.keyboard([["◀️ Orqaga"], getDates()]);
-};
+exports.singleTeacher = () => Markup.keyboard([["◀️ Bekor qilish"], getDates().map(item => item.date)]).resize();
 
 exports.selectTime = (lessons) => {
-    return Markup.keyboard(["◀️ Orqaga", ...times.map((item) => lessons.find((lesson) => lesson.time == item) ? item + " 🔴" : item + " 🟡")]);
+    const buttons = [["◀️ Bekor qilish"]];
+    let row = [];
+
+    times.forEach((time, index) => {
+        row.push(lessons.find(item => item.time === time) ? `${time} 🔴` : `${time} 🟡`);
+
+        if (row.length >= 3 || index === times.length - 1) {
+            buttons.push(row);
+            row = [];
+        };
+    });
+
+    return Markup.keyboard(buttons).resize();
 };
+
+exports.cancel = Markup.keyboard([
+    "◀️ Bekor qilish",
+]).resize();
 
 exports.back = Markup.keyboard([
     "◀️ Orqaga",

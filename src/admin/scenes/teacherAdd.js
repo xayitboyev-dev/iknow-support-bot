@@ -1,6 +1,7 @@
-const { Scenes: { WizardScene } } = require('telegraf');
+const { Scenes: { WizardScene }, Markup } = require('telegraf');
+const { cancel, empty } = require("../keyboards/button");
+const { branches } = require("../../config/config.json");
 const User = require("../../models/User");
-const { cancel } = require("../keyboards/button");
 
 const steps = [
     (ctx) => {
@@ -21,10 +22,20 @@ const steps = [
         if (ctx.message?.text) {
             ctx.scene.state.last_name = ctx.message.text;
 
-            ctx.reply("Ielts score kiriting. (example: 7.5)");
+            ctx.reply("Filial kiriting.", Markup.keyboard(branches).resize());
             ctx.wizard.next();
         } else {
             ctx.reply("❗️ Iltimos familiyani faqat harflarda kiriting.");
+        };
+    },
+    (ctx) => {
+        if (ctx.message?.text) {
+            ctx.scene.state.branch = ctx.message.text;
+
+            ctx.reply("Ielts score kiriting. (example: 7.5)", empty);
+            ctx.wizard.next();
+        } else {
+            ctx.reply("❗️ Iltimos branchi quyidagi tugmalardan tanlang.");
         };
     },
     (ctx) => {
@@ -56,13 +67,12 @@ const steps = [
         if (ctx.message?.photo && ctx.message.photo.length > 0) {
             ctx.scene.state.image = ctx.message.photo[ctx.message.photo.length - 1].file_id;
             ctx.scene.state.role = "TEACHER";
-            ctx.scene.state.id = Date.now();
 
             // save the new product on the database!
             try {
                 await User.create(ctx.scene.state);
 
-                ctx.reply("✅ O'qituvchi qo'shildi.");
+                ctx.reply("✅ Ustoz qo'shildi.");
                 ctx.scene.enter("admin:main");
             } catch (error) {
                 ctx.reply(error.message);
