@@ -13,7 +13,7 @@ const lessonSchema = new Schema({
     },
     topic: {
         type: String,
-        maxLength: 1000,
+        maxLength: [100, 'Topic exceeds the maximum allowed length of 100.'],
         required: true,
     },
     status: {

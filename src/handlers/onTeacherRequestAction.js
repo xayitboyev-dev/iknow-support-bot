@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
             ctx.telegram.sendMessage(lesson.user.id, `✅ Muvaffaqqiyatli qabulga yozildingiz. Sizni ${lesson.date} sana soat ${lesson.time} da kutib qolamiz!`, main);
 
             // delete this message
-            ctx.deleteMessage();
+            ctx.editMessageText(`✅ Qabul qilindi, Iltimos ${lesson.date} - ${lesson.time} dagi darsingizni o'z vaqtida o'tib bering.`);
 
             ctx.answerCbQuery("Tasdiqlandi ✅");
         };

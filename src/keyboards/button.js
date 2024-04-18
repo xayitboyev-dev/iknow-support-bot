@@ -3,8 +3,8 @@ const { times } = require("../config/config.json");
 const getDates = require("../utils/getDates");
 
 exports.main = Markup.keyboard([
-    "✏️ Ustoz darsiga yozilish",
-    "⚙️ Sozlamalar"
+    ["✏️ Darsga yozilish", "🔖 Qabullar"],
+    ["⚙️ Sozlamalar"]
 ]).resize();
 
 exports.teacherMain = Markup.keyboard([

@@ -9,7 +9,7 @@ module.exports = async (ctx) => {
         // confirm the lesson
         if (data.startsWith("finish_lesson_")) {
             // update the lesson
-            const lesson = await Lesson.findByIdAndUpdate(id, { status: "finished" }, { new: true }).populate("user teacher");
+            const lesson = await Lesson.findOneAndUpdate({ _id: id, status: "confirmed" }, { status: "finished" }, { new: true }).populate("user teacher");
 
             if (!lesson) throw new Error("Lesson not found!");
 
@@ -26,7 +26,7 @@ module.exports = async (ctx) => {
 
             if (!lesson) throw new Error("Lesson not found!");
 
-            ctx.answerCbQuery("Qabul yopildi ⛔️");
+            ctx.answerCbQuery("Dars yopildi ⛔️", { show_alert: true });
         };
     } catch (error) {
         ctx.answerCbQuery(error.message, { show_alert: true });

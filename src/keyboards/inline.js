@@ -11,8 +11,12 @@ exports.teacherRequest = (id) => Markup.inlineKeyboard([
 ]);
 
 exports.oneLesson = (id) => Markup.inlineKeyboard([
-    Markup.button.callback("✅ Tugatish", "finish_lesson_" + id),
+    Markup.button.callback("✅ Dars o'tildi", "finish_lesson_" + id),
     Markup.button.callback("❌ O'quvchi kelmadi", "reject_lesson_" + id),
+]);
+
+exports.deleteLesson = (id) => Markup.inlineKeyboard([
+    Markup.button.callback("❌ Darsni bekor qilish", "delete_lesson_" + id),
 ]);
 
 exports.rate = (teacherId) => Markup.inlineKeyboard([
