@@ -23,12 +23,16 @@ scene.start(onStart);
 
 scene.use(auth);
 
+scene.hears("⚙️ Sozlamalar", (ctx) => {
+    ctx.scene.enter("settings", ctx.state.user);
+});
+
 // action for basic users
 scene.hears("✏️ Darsga yozilish", userAuth, (ctx) => {
     ctx.scene.enter("teachers");
 });
 
-scene.hears("🔖 Qabullar", userAuth, async (ctx) => {
+scene.hears("🔖 Darslar", userAuth, async (ctx) => {
     try {
         const lessons = await Lesson.find({ user: ctx.state.user._id, status: "confirmed", date: { $in: getDates(1).map((item) => item.date) } }).populate("teacher");
 
@@ -37,7 +41,7 @@ scene.hears("🔖 Qabullar", userAuth, async (ctx) => {
         };
 
         lessons.forEach((lesson) => {
-            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.full_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
+            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.full_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n🏫 Filial: ${lesson.teacher.branch}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
         });
     } catch (error) {
         ctx.reply("Error: " + error.message);
@@ -68,6 +72,7 @@ scene.action(/^accept_lesson_(.+)|deny_lesson_(.+)$/, teacherAuth, onTeacherRequ
 scene.action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, teacherAuth, onLessonAction);
 
 // action for basic users
+
 scene.on("message", (ctx) => {
     ctx.reply("🔽 Kerakli bo'limni tanlang.", ctx.state?.user?.role == "TEACHER" ? teacherMain : main);
 });

@@ -24,7 +24,7 @@ bot.use(session());
 bot.use(stage.use(checkUser)
     .on("my_chat_member", onBlocked)
     .hears("🔙 Bekor qilish", (ctx) => ctx.scene.enter("admin:main"))
-    .hears("⏪ Orqaga", (ctx) => ctx.scene.enter("main"))
+    .hears(["◀️ Bekor qilish", "⏪ Orqaga"], (ctx) => ctx.scene.enter("main"))
     .command("admin", (ctx) => ctx.scene.enter("admin:main"))
     .command("teacher", (ctx) => ctx.scene.enter("teacher:register"))
     .middleware()

@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
             bot.telegram.sendMessage(user.id, `✅ Shaxsingiz tasdiqlandi. Endi botdan to'liq foydalanishingiz mumkin.`, main);
 
             // update this message
-            ctx.editMessageText(`<b>👤 Ism:</b> ${user.full_name}\n<b>🎓 Darajasi:</b> ${user.level}\n<b>🧑‍🏫 Ustoz:</b> ${user.teacher}\n<b>☎️ Telefon:</b> ${user.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${user.id}">${user.full_name}</a>\n\n✅ #tasdiqlangan`, { parse_mode: "HTML" });
+            ctx.editMessageText(`<b>👤 Ism:</b> ${user.full_name}\n<b>🎓 Darajasi:</b> ${user.level}\n<b>☎️ Telefon:</b> ${user.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${user.id}">${user.full_name}</a>\n\n✅ #tasdiqlangan`, { parse_mode: "HTML" });
 
             ctx.answerCbQuery("Tasdiqlandi ✅");
         };
@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
             bot.telegram.sendMessage(user.id, `❌ Shaxsingiz aniqlanmadi va rad etildi. Iltimos ma'lumotlaringizni qaytadan to'gri kiriting. /start`, reEnter);
 
             // update this message
-            ctx.editMessageText(`<b>👤 Ism:</b> ${user.full_name}\n<b>🎓 Darajasi:</b> ${user.level}\n<b>🧑‍🏫 Ustoz:</b> ${user.teacher}\n<b>☎️ Telefon:</b> ${user.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${user.id}">${user.full_name}</a>\n\n❌ #radetilgan`, { parse_mode: "HTML" });
+            ctx.editMessageText(`<b>👤 Ism:</b> ${user.full_name}\n<b>🎓 Darajasi:</b> ${user.level}\n<b>☎️ Telefon:</b> ${user.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${user.id}">${user.full_name}</a>\n\n❌ #radetilgan`, { parse_mode: "HTML" });
 
             ctx.answerCbQuery("Rad etildi ❌");
         };

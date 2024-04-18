@@ -33,7 +33,7 @@ const steps = [
         if (ctx.message?.text) {
             ctx.scene.state.teacher = ctx.message.text;
 
-            ctx.reply("Telefon raqamingizni quyida berilgan tugma orqali yuboring yoki o'zingiz 941234567 formatida kiriting.", phone);
+            ctx.reply("Telefon raqamingizni 941234567 formatida kiriting.", phone);
             ctx.wizard.next();
         } else {
             ctx.reply("❗️ Iltimos darajani faqat harflarda kiriting.");
@@ -54,7 +54,7 @@ const steps = [
                 const request = await User.create(ctx.scene.state);
 
                 if (needActivationRequest) {
-                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.full_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.teacher}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.full_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
+                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.full_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${ctx.scene.state.teacher}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.id}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
                     await ctx.reply("✅ Ma'lumotlaringiz yuborildi. Adminlar uni tasdiqlagandan so'ng botdan to'liq foydalanishingiz mumkin.", empty);
                 } else {
                     await ctx.reply("✅ Ma'lumotlaringiz saqlandi. Endi botdan to'liq foydalanishingiz mumkin.");

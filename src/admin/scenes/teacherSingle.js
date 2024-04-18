@@ -12,7 +12,7 @@ scene.enter(async (ctx) => {
         // get info
         const results = await Promise.all([Lesson.count({ teacher: teacher._id, status: "finished" }), Lesson.count({ teacher: teacher._id, status: "cancelled" }), Lesson.count({ teacher: teacher._id, status: "rejected" })]);
 
-        ctx.replyWithPhoto(teacher.image, { ...teacherSingle, caption: `<b>${teacher.full_name}</b>\n\n🔖 IELTS Score: ${teacher.ielts}\n☎️ Telefon: ${teacher.phone}\n🏫 Filial: ${teacher.branch}\n⭐️ Reyting: ${getRating(teacher.ratings)}\n🟢 Status: ${teacher.active ? "active" : "inactive"}\n\nO'tilgan darslar: ${results[0]}\nRad etilgan darslar: ${results[1]}\nBekor qilingan darslar: ${results[2]}`, parse_mode: "HTML" });
+        ctx.replyWithPhoto(teacher.image, { ...teacherSingle, caption: `<b>${teacher.full_name}</b>\n\n🔖 IELTS Score: ${teacher.ielts}\n☎️ Telefon: ${teacher.phone}\n🏫 Filial: ${teacher.branch}\n⭐️ Reyting: ${getRating(teacher.ratings)}\n👤 Telegram: ${teacher.id ? `<a href="tg://user?id=${teacher.id}">${teacher.id}</a>` : "ulanmagan"}\n${teacher.active ? "🟢" : "🔴"} Status: ${teacher.active ? "active" : "inactive"}\n\nO'tilgan darslar: ${results[0]}\nRad etilgan darslar: ${results[1]}\nBekor qilingan darslar: ${results[2]}`, parse_mode: "HTML" });
     } catch (error) {
         ctx.reply(error.message);
     };

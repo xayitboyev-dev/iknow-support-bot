@@ -15,10 +15,6 @@ scene.enter(async (ctx) => {
     };
 });
 
-scene.hears("◀️ Bekor qilish", (ctx) => {
-    ctx.scene.enter("teachers");
-});
-
 scene.on("text", (ctx) => {
     const date = getDates().find((item) => item.date === ctx.message.text);
 

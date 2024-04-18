@@ -15,10 +15,6 @@ scene.enter(async (ctx) => {
     };
 });
 
-scene.hears("◀️ Bekor qilish", (ctx) => {
-    ctx.scene.enter("teachers");
-});
-
 scene.on("text", auth, async (ctx) => {
     try {
         const time = times.find((item) => item == ctx.message.text.slice(0, 5));

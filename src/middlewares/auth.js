@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 module.exports = async (ctx, next) => {
     try {
-        const user = await User.findOne({ id: ctx.from.id, });
+        const user = await User.findOne({ id: ctx.from.id, }).lean();
 
         if (user) {
             if (user.status == "activated" || user.role != "USER") {

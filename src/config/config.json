@@ -19,6 +19,14 @@
         "19:00",
         "19:30"
     ],
+    "levels": [
+        "Beginner",
+        "Elementary",
+        "Pre-Intermediate",
+        "Intermediate",
+        "Pre-IELTS",
+        "IELTS"
+    ],
     "holidays": [
         0,
         6

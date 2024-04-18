@@ -3,6 +3,10 @@ const { Scenes: { Stage } } = require('telegraf');
 const stage = new Stage([
     require("./main"),
     require("./splash"),
+    require("./settings"),
+    require("./settings/editName"),
+    require("./settings/updateLevel"),
+    require("./settings/updatePhone"),
     require("./register"),
     require("./teachers"),
     require("./teacher/register"),

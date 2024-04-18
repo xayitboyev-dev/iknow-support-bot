@@ -2,11 +2,13 @@ const { branches } = require("../config/config.json");
 const { model, Schema } = require('mongoose');
 
 const userSchema = new Schema({
-    full_name: String,
+    full_name: {
+        type: String,
+        maxLength: [40, 'Topic exceeds the maximum allowed length of 40.'],
+    },
     username: String,
     level: String,
     phone: String,
-    teacher: String,
     id: {
         type: Number,
         unique: true,
@@ -42,13 +44,7 @@ const userSchema = new Schema({
         }
     },
     ratings: {
-        type: Schema.Types.Mixed,
-        // A mixed type object to handle ratings. Each star level is represented in the ratings object
-        1: Number, //  the key is the weight of that star level
-        2: Number,
-        3: Number,
-        4: Number,
-        5: Number,
+        type: Object,
         default: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 5 }
     }
 });

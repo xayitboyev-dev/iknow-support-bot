@@ -10,10 +10,6 @@ scene.enter(async (ctx) => {
     ctx.reply("Yaxshi, endi qaysi mavzuni tushuntirib berishini istaysiz?", cancel);
 });
 
-scene.hears("◀️ Bekor qilish", (ctx) => {
-    ctx.scene.enter("teachers");
-});
-
 scene.on("text", auth, async (ctx) => {
     const topic = ctx.message.text;
 

@@ -1,10 +1,31 @@
 const { Markup } = require("telegraf");
-const { times } = require("../config/config.json");
+const { times, levels } = require("../config/config.json");
 const getDates = require("../utils/getDates");
 
 exports.main = Markup.keyboard([
-    ["✏️ Darsga yozilish", "🔖 Qabullar"],
+    ["✏️ Darsga yozilish", "🔖 Darslar"],
     ["⚙️ Sozlamalar"]
+]).resize();
+
+exports.userSettings = Markup.keyboard([
+    ["✏️ Ismni tahrirlash"],
+    ["☎️ Telefonni yangilash", "🎓 Darajani yangilash"],
+    ["⏪ Orqaga"]
+]).resize();
+
+exports.teacherSettings = Markup.keyboard([
+    ["✏️ Ismni tahrirlash", "☎️ Telefonni yangilash"],
+    ["⏪ Orqaga"]
+]).resize();
+
+exports.settingsUpdateLevel = Markup.keyboard([
+    "◀️ Bekor qilish",
+    ...levels
+]).resize();
+
+exports.settingsUpdatePhone = Markup.keyboard([
+    "◀️ Bekor qilish",
+    Markup.button.contactRequest("☎️ Telefon raqamni yuborish")
 ]).resize();
 
 exports.splash = Markup.keyboard([
@@ -61,11 +82,4 @@ exports.phone = Markup.keyboard([
     Markup.button.contactRequest("☎️ Telefon raqamni yuborish")
 ]).resize();
 
-exports.levels = Markup.keyboard([
-    "Beginner",
-    "Elementary",
-    "Pre-Intermediate",
-    "Intermediate",
-    "Pre-IELTS",
-    "IELTS",
-]).resize();
+exports.levels = Markup.keyboard(levels).resize();

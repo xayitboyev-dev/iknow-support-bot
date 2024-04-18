@@ -61,6 +61,8 @@ const steps = [
         try {
             const updatedTeacher = await User.findByIdAndUpdate(ctx.scene.state.teacher._id, ctx.scene.state, { new: true }).select("full_name ielts active branch phone image").lean();
 
+            updatedTeacher.ratings = ctx.scene.state.teacher.ratings;
+
             ctx.reply("✅ Ustoz tahrirlandi.");
             ctx.scene.enter("admin:teacherSingle", updatedTeacher);
         } catch (error) {
