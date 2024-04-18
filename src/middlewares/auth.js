@@ -12,7 +12,8 @@ module.exports = async (ctx, next) => {
                 ctx.reply("iKnow Academy o'quvchisi ekanligingiz tekshirilganidan so'ng botdan to'liq foydalanishingiz mumkin. Iltimos kuting!");
             };
         } else {
-            ctx.scene.enter("register");
+            ctx.scene.leave();
+            ctx.scene.enter("splash");
         };
     } catch (error) {
         console.log("Auth middleware error:", error.message);

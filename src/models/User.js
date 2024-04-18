@@ -2,8 +2,7 @@ const { branches } = require("../config/config.json");
 const { model, Schema } = require('mongoose');
 
 const userSchema = new Schema({
-    first_name: String,
-    last_name: String,
+    full_name: String,
     username: String,
     level: String,
     phone: String,

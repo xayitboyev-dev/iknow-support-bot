@@ -5,27 +5,17 @@ const User = require("../../models/User");
 
 const steps = [
     (ctx) => {
-        ctx.reply("Ism kiriting.", cancel);
+        ctx.reply("Ism va familiya kiriting.", cancel);
         ctx.wizard.next();
     },
     (ctx) => {
         if (ctx.message?.text) {
-            ctx.scene.state.first_name = ctx.message.text;
-
-            ctx.reply("Familiya kiriting.");
-            ctx.wizard.next();
-        } else {
-            ctx.reply("❗️ Iltimos ismni faqat harflarda kiriting.");
-        };
-    },
-    (ctx) => {
-        if (ctx.message?.text) {
-            ctx.scene.state.last_name = ctx.message.text;
+            ctx.scene.state.full_name = ctx.message.text;
 
             ctx.reply("Filial kiriting.", Markup.keyboard(branches).resize());
             ctx.wizard.next();
         } else {
-            ctx.reply("❗️ Iltimos familiyani faqat harflarda kiriting.");
+            ctx.reply("❗️ Iltimos ism va familiyani faqat harflarda kiriting.");
         };
     },
     (ctx) => {

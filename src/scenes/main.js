@@ -9,6 +9,7 @@ const userAuth = require("../middlewares/userAuth");
 const auth = require("../middlewares/auth");
 const getDates = require("../utils/getDates");
 const Lesson = require("../models/Lesson");
+const onStart = require("../handlers/onStart");
 
 // initializing the scene
 const scene = new BaseScene("main");
@@ -17,6 +18,8 @@ const scene = new BaseScene("main");
 scene.enter(auth, (ctx) => {
     ctx.reply("🔝 Asosiy menyu", ctx.state?.user?.role == "TEACHER" ? teacherMain : main);
 });
+
+scene.start(onStart);
 
 scene.use(auth);
 
@@ -34,7 +37,7 @@ scene.hears("🔖 Qabullar", userAuth, async (ctx) => {
         };
 
         lessons.forEach((lesson) => {
-            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.first_name || lesson.teacher.last_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
+            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.full_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
         });
     } catch (error) {
         ctx.reply("Error: " + error.message);
@@ -44,7 +47,7 @@ scene.hears("🔖 Qabullar", userAuth, async (ctx) => {
 scene.action(/^delete_lesson_(.+)$/, userAuth, onDeleteLessonAction);
 
 // actions for teachers
-scene.hears("🔖 Darslar", teacherAuth, async (ctx) => {
+scene.hears("🔖 Qabul qilingan darslar", teacherAuth, async (ctx) => {
     try {
         const lessons = await Lesson.find({ teacher: ctx.state.user._id, status: "confirmed", date: { $in: getDates(1).map((item) => item.date) } }).populate("user");
 
@@ -53,7 +56,7 @@ scene.hears("🔖 Darslar", teacherAuth, async (ctx) => {
         };
 
         lessons.forEach((lesson) => {
-            ctx.replyWithHTML(`👤 O'quvchi ismi: ${lesson.user.first_name || lesson.user.last_name}\n🎓 Daraja: ${lesson.user.level || "Unknown"}\n☎️ Telefon: ${lesson.user.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}`, oneLesson(lesson._id));
+            ctx.replyWithHTML(`👤 O'quvchi ismi: ${lesson.user.full_name}\n🎓 Daraja: ${lesson.user.level || "Unknown"}\n☎️ Telefon: ${lesson.user.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}`, oneLesson(lesson._id));
         });
     } catch (error) {
         ctx.reply("Error: " + error.message);

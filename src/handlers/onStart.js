@@ -1,8 +1,9 @@
-module.exports = async (ctx) => {
-    if (ctx.startPayload) {
+module.exports = async (ctx, next) => {
+    await ctx.reply("👋 Assalomu alaykum!");
+
+    if (ctx?.startPayload == "teacher") {
         ctx.scene.enter("teacher:register");
     } else {
-        ctx.reply("Assalomu alaykum!");
         ctx.scene.enter("main");
     };
 };

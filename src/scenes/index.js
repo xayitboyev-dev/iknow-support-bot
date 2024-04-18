@@ -2,6 +2,7 @@ const { Scenes: { Stage } } = require('telegraf');
 
 const stage = new Stage([
     require("./main"),
+    require("./splash"),
     require("./register"),
     require("./teachers"),
     require("./teacher/register"),

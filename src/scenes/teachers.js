@@ -5,9 +5,9 @@ const User = require("../models/User");
 
 scene.enter(async (ctx) => {
     try {
-        const users = await User.find({ role: "TEACHER", id: { $ne: null } }).select("first_name last_name ielts id").lean();
+        const users = await User.find({ role: "TEACHER", id: { $ne: null } }).select("full_name ielts id").lean();
 
-        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.first_name + " " + item.last_name + " " + item.ielts }));
+        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.full_name + " " + item.ielts }));
 
         ctx.reply("🧑‍🏫 Ustoz tanlang:", teachers(ctx.scene.state.teachers));
     } catch (error) {

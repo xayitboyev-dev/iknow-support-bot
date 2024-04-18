@@ -6,27 +6,17 @@ const User = require("../models/User");
 
 const steps = [
     (ctx) => {
-        ctx.reply("Botdan to'liq foydalanishingiz uchun siz haqingizda ozgina bilib olsam...\n\nIsmingizni kiriting.", empty);
+        ctx.reply("Botdan to'liq foydalanishingiz uchun siz haqingizda ozgina bilib olsam...\n\nIsm va familiyangizni kiriting.", empty);
         ctx.wizard.next();
     },
     (ctx) => {
         if (ctx.message?.text) {
-            ctx.scene.state.first_name = ctx.message.text;
-
-            ctx.reply("Familiyangizni kiriting.");
-            ctx.wizard.next();
-        } else {
-            ctx.reply("❗️ Iltimos ismni faqat harflarda kiriting.");
-        };
-    },
-    (ctx) => {
-        if (ctx.message?.text) {
-            ctx.scene.state.last_name = ctx.message.text;
+            ctx.scene.state.full_name = ctx.message.text;
 
             ctx.reply("Ingliz tili darajangizni tanlang.", levels);
             ctx.wizard.next();
         } else {
-            ctx.reply("❗️ Iltimos familiyani faqat harflarda kiriting.");
+            ctx.reply("❗️ Iltimos ism va familiyani faqat harflarda kiriting.");
         };
     },
     (ctx) => {
@@ -64,7 +54,7 @@ const steps = [
                 const request = await User.create(ctx.scene.state);
 
                 if (needActivationRequest) {
-                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.first_name} ${request.last_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.teacher}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.first_name || request.last_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
+                    await ctx.telegram.sendMessage(process.env.ADMIN_CHANNEL, `<b>👤 Ism:</b> ${request.full_name}\n<b>🎓 Darajasi:</b> ${request.level}\n<b>🧑‍🏫 Ustoz:</b> ${request.teacher}\n<b>☎️ Telefon:</b> ${request.phone}\n<b>👤 Telegram:</b> <a href="tg://user?id=${request.id}">${request.full_name}</a>\n\n🕐 #kutilmoqda`, { ...requestButton(request._id), parse_mode: "HTML" });
                     await ctx.reply("✅ Ma'lumotlaringiz yuborildi. Adminlar uni tasdiqlagandan so'ng botdan to'liq foydalanishingiz mumkin.", empty);
                 } else {
                     await ctx.reply("✅ Ma'lumotlaringiz saqlandi. Endi botdan to'liq foydalanishingiz mumkin.");

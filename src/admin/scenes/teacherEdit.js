@@ -4,27 +4,17 @@ const { branches } = require("../../config/config.json");
 
 const steps = [
     (ctx) => {
-        ctx.reply("Ism kiriting.", Markup.keyboard([ctx.scene.state.teacher.first_name]).resize());
+        ctx.reply("Ism va familiya kiriting.", Markup.keyboard([ctx.scene.state.teacher.full_name]).resize());
         ctx.wizard.next();
     },
     (ctx) => {
         if (ctx.message?.text) {
-            ctx.scene.state.first_name = ctx.message.text;
-
-            ctx.reply("Familiya kiriting.", Markup.keyboard([ctx.scene.state.teacher.last_name]).resize());
-            ctx.wizard.next();
-        } else {
-            ctx.reply("❗️ Iltimos ismni faqat harflarda kiriting.");
-        };
-    },
-    (ctx) => {
-        if (ctx.message?.text) {
-            ctx.scene.state.last_name = ctx.message.text;
+            ctx.scene.state.full_name = ctx.message.text;
 
             ctx.reply("Filial kiriting.", Markup.keyboard(branches).resize());
             ctx.wizard.next();
         } else {
-            ctx.reply("❗️ Iltimos familiyani faqat harflarda kiriting.");
+            ctx.reply("❗️ Iltimos ism va familiyani faqat harflarda kiriting.");
         };
     },
     (ctx) => {
@@ -69,7 +59,7 @@ const steps = [
 
         // save the new product on the database!
         try {
-            const updatedTeacher = await User.findByIdAndUpdate(ctx.scene.state.teacher._id, ctx.scene.state, { new: true }).select("first_name last_name ielts active branch phone image").lean();
+            const updatedTeacher = await User.findByIdAndUpdate(ctx.scene.state.teacher._id, ctx.scene.state, { new: true }).select("full_name ielts active branch phone image").lean();
 
             ctx.reply("✅ Ustoz tahrirlandi.");
             ctx.scene.enter("admin:teacherSingle", updatedTeacher);

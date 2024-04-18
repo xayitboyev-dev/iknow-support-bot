@@ -7,7 +7,7 @@ const scene = new BaseScene("teacher:register");
 
 // use handlers here
 scene.enter((ctx) => {
-    ctx.reply("👋 Assalomu alaykum, botdan ustoz sifatida foydalanish uchun, raqamingizni quyidagi tugma orqali yuboring yoki 931234567 formatida yozing.", phone);
+    ctx.reply("Botdan ustoz sifatida foydalanish uchun, raqamingizni quyidagi tugma orqali yuboring yoki 931234567 formatida yozing.", phone);
 });
 
 scene.on(["text", "contact"], async (ctx) => {

@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
             if (!lesson) throw new Error("Lesson not found!");
 
             // send the product to the user
-            ctx.telegram.sendMessage(lesson.user.id, `👋 Assalomu alaykum, Ustozimiz ${lesson.teacher.first_name}ning o'tgan darsiga baho bering!`, rate(lesson.teacher._id));
+            ctx.telegram.sendMessage(lesson.user.id, `👋 Assalomu alaykum, Ustozimiz ${lesson.teacher.full_name}ning o'tgan darsiga baho bering!`, rate(lesson.teacher._id));
 
             ctx.answerCbQuery("Dars tugatildi ✅", { show_alert: true });
         };

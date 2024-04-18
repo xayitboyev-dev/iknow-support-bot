@@ -9,7 +9,6 @@ const { session } = require("telegraf");
 const onRequestAction = require("./handlers/onRequestAction");
 const checkUser = require("./middlewares/checkUser");
 const onBlocked = require("./handlers/onBlocked");
-const onStart = require("./handlers/onStart");
 const onRate = require("./handlers/onRate");
 const stage = require("./scenes/index");
 const bot = require("./core/bot");
@@ -23,7 +22,6 @@ bot.action(/^rate_(.+)_(.+)$/, onRate);
 // use middlewares
 bot.use(session());
 bot.use(stage.use(checkUser)
-    .start(onStart)
     .on("my_chat_member", onBlocked)
     .hears("🔙 Bekor qilish", (ctx) => ctx.scene.enter("admin:main"))
     .hears("⏪ Orqaga", (ctx) => ctx.scene.enter("main"))

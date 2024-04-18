@@ -7,8 +7,12 @@ exports.main = Markup.keyboard([
     ["⚙️ Sozlamalar"]
 ]).resize();
 
+exports.splash = Markup.keyboard([
+    "📲 Ro'yxatdan o'tish"
+]).resize();
+
 exports.teacherMain = Markup.keyboard([
-    "🔖 Darslar",
+    "🔖 Qabul qilingan darslar",
     "⚙️ Sozlamalar"
 ]).resize();
 
