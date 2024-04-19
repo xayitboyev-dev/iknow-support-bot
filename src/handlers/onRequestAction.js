@@ -13,6 +13,7 @@ module.exports = async (ctx) => {
             const user = await User.findByIdAndUpdate(id, { status: "activated", $unset: { teacher: "" } });
 
             if (!user) {
+                ctx.answerCbQuery("Request not found!");
                 return ctx.deleteMessage();
             };
 
@@ -31,6 +32,7 @@ module.exports = async (ctx) => {
             const user = await User.findByIdAndDelete(id);
 
             if (!user) {
+                ctx.answerCbQuery("Request not found!");
                 return ctx.deleteMessage();
             };
 

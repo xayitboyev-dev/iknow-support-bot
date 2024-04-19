@@ -27,6 +27,7 @@
         "Pre-IELTS",
         "IELTS"
     ],
+    "maximumBookingPeerDay": 3,
     "holidays": [
         0,
         6

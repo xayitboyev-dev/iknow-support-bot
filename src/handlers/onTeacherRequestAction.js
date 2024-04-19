@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
             if (!lesson) throw new Error("Lesson not found!");
 
             // send the product to the user
-            ctx.telegram.sendMessage(lesson.user.id, `✅ Muvaffaqqiyatli qabulga yozildingiz. Sizni ${lesson.date} sana soat ${lesson.time} da kutib qolamiz!`, main);
+            ctx.telegram.sendMessage(lesson.user.id, `✅ Muvaffaqqiyatli qabulga yozildingiz. Sizni ${lesson.date} sana soat ${lesson.time} da kutib qolamiz!`);
 
             // delete this message
             ctx.editMessageText(`✅ Qabul qilindi, Iltimos ${lesson.date} - ${lesson.time} dagi darsingizni o'z vaqtida o'tib bering.`);
@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
             await User.findByIdAndUpdate(ctx.state.user._id, { $inc: { "ratings.1": 1 } });
 
             // send the product to the user
-            ctx.telegram.sendMessage(lesson.user.id, `⛔️ Afsuski qabulga so'rovingiz rad etildi. Boshqa ustozning qabuliga yozilishingiz mumkin!`, main);
+            ctx.telegram.sendMessage(lesson.user.id, `⛔️ Afsuski qabulga so'rovingiz rad etildi. Boshqa ustozning qabuliga yozilishingiz mumkin!`);
 
             // delete this message
             ctx.editMessageText("⛔️ Rad etildi. Eslatib o'tamiz har bir rad etganingiz uchun reyting pasayadi!");

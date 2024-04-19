@@ -38,7 +38,7 @@ const userSchema = new Schema({
     status: {
         type: String,
         enum: ["activated", "pending"],
-        function() {
+        default: function () {
             // Check if user role is TEACHER
             if (this.role === 'USER') return "pending";
         }
@@ -48,5 +48,7 @@ const userSchema = new Schema({
         default: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 5 }
     }
 });
+
+
 
 module.exports = model('user', userSchema);

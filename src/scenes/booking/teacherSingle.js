@@ -4,6 +4,9 @@ const { singleTeacher } = require('../../keyboards/button');
 const getDates = require("../../utils/getDates");
 const getRating = require("../../utils/getRating");
 const User = require("../../models/User");
+const Lesson = require('../../models/Lesson');
+const auth = require("../../middlewares/auth");
+const { maximumBookingPeerDay } = require("../../config/config.json");
 
 scene.enter(async (ctx) => {
     try {
@@ -15,17 +18,29 @@ scene.enter(async (ctx) => {
     };
 });
 
-scene.on("text", (ctx) => {
-    const date = getDates().find((item) => item.date === ctx.message.text);
+scene.on("text", auth, async (ctx) => {
+    // Get current date
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
 
-    if (date) {
-        if (date.holiday) {
-            ctx.reply("❗️ Biz bu sanada dam olamiz.");
+    try {
+        const countLessons = await Lesson.countDocuments({ user: ctx.state.user?._id, createdAt: { $gte: startOfDay } });
+
+        if (countLessons >= maximumBookingPeerDay) throw new Error(`❗️ Bugun siz ${maximumBookingPeerDay} marta qabulga yozilgansiz, iltimos ertaga qayta uruning.`);
+
+        const date = getDates().find((item) => item.date === ctx.message.text);
+
+        if (date) {
+            if (date.holiday) {
+                ctx.reply("❗️ Biz bu sanada dam olamiz.");
+            } else {
+                ctx.scene.enter("booking:selectTime", { date: date.date, teacher: ctx.scene.state });
+            };
         } else {
-            ctx.scene.enter("booking:selectTime", { date: date.date, teacher: ctx.scene.state });
+            ctx.reply("❗️ Iltimos quyida keltirilgan sanalardan tanlang.");
         };
-    } else {
-        ctx.reply("❗️ Iltimos quyida keltirilgan sanalardan tanlang.");
+    } catch (error) {
+        ctx.reply(error.message);
     };
 });
 

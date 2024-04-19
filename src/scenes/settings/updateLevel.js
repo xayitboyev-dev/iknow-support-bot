@@ -9,7 +9,7 @@ scene.enter(async (ctx) => {
 
 scene.on("text", async (ctx) => {
     try {
-        const user = await User.findByIdAndUpdate(ctx.scene.state._id, { level: ctx.message.text }).lean();
+        const user = await User.findByIdAndUpdate(ctx.scene.state._id, { level: ctx.message.text }, { new: true }).lean();
         await ctx.reply("✅ Daraja muvaffaqqiyatli yangilandi.");
 
         ctx.scene.enter("settings", user);

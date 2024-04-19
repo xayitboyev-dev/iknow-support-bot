@@ -7,7 +7,7 @@ scene.enter(async (ctx) => {
     try {
         const users = await User.find({ role: "TEACHER", id: { $ne: null }, active: true }).select("full_name ielts id").lean();
 
-        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.full_name + " " + item.ielts }));
+        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.full_name + " " + (item.ielts.length > 1 ? item.ielts : item.ielts + ".0") }));
 
         ctx.reply("🧑‍🏫 Ustoz tanlang:", teachers(ctx.scene.state.teachers));
     } catch (error) {

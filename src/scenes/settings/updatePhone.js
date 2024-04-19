@@ -11,7 +11,7 @@ scene.on(["text", "contact"], async (ctx) => {
     const phone = ctx.message?.contact?.phone_number && "+" + ctx.message?.contact?.phone_number || (ctx.message.text.includes("+998") ? ctx.message.text : "+998" + ctx.message.text).split(" ").join("");
 
     try {
-        const user = await User.findByIdAndUpdate(ctx.scene.state._id, { phone }).lean();
+        const user = await User.findByIdAndUpdate(ctx.scene.state._id, { phone }, { new: true }).lean();
         await ctx.reply("✅ Telefon raqam yangilandi.");
 
         ctx.scene.enter("settings", user);

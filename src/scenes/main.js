@@ -48,8 +48,6 @@ scene.hears("🔖 Darslar", userAuth, async (ctx) => {
     };
 });
 
-scene.action(/^delete_lesson_(.+)$/, userAuth, onDeleteLessonAction);
-
 // actions for teachers
 scene.hears("🔖 Qabul qilingan darslar", teacherAuth, async (ctx) => {
     try {
@@ -67,12 +65,7 @@ scene.hears("🔖 Qabul qilingan darslar", teacherAuth, async (ctx) => {
     };
 });
 
-scene.action(/^accept_lesson_(.+)|deny_lesson_(.+)$/, teacherAuth, onTeacherRequestAction);
-
-scene.action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, teacherAuth, onLessonAction);
-
 // action for basic users
-
 scene.on("message", (ctx) => {
     ctx.reply("🔽 Kerakli bo'limni tanlang.", ctx.state?.user?.role == "TEACHER" ? teacherMain : main);
 });
