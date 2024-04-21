@@ -13,6 +13,7 @@ const stage = new Stage([
     require("./teacher/register"),
     require("./booking/selectTime"),
     require("./booking/enterTopic"),
+    require("./booking/selectBranch"),
     require("./booking/teacherSingle"),
     require("../admin/scenes/main"),
     require("../admin/scenes/sendMessage"),

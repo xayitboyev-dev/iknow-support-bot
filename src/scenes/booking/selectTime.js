@@ -25,7 +25,7 @@ scene.on("text", auth, async (ctx) => {
 
         ctx.scene.state.time = time;
 
-        ctx.scene.enter("booking:enterTopic", ctx.scene.state);
+        ctx.scene.enter("booking:selectBranch", ctx.scene.state);
     } catch (error) {
         ctx.reply(error.message);
     };

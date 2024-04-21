@@ -5,7 +5,7 @@ const User = require("../../models/User");
 
 scene.enter(async (ctx) => {
     try {
-        const users = await User.find({ role: "TEACHER" }).select("full_name ielts id image phone active ratings branch").lean();
+        const users = await User.find({ role: "TEACHER" }).select("full_name ielts id image phone active ratings language").lean();
 
         ctx.scene.state.teachers = users.map((item) => ({ teacher: item, name: item.full_name + " " + item.ielts }));
 

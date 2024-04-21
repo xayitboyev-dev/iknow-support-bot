@@ -1,5 +1,5 @@
-const { branches } = require("../config/config.json");
 const { model, Schema } = require('mongoose');
+const { languages } = require("../config/config.json");
 
 const userSchema = new Schema({
     full_name: {
@@ -28,19 +28,20 @@ const userSchema = new Schema({
         type: String,
         default: 'USER'
     },
-    branch: {
-        type: String,
-        default: function () {
-            // Check if user role is TEACHER
-            if (this.role === 'TEACHER') return branches[0];
-        }
-    },
     status: {
         type: String,
         enum: ["activated", "pending"],
         default: function () {
             // Check if user role is USER
             if (this.role === 'USER') return "pending";
+        }
+    },
+    language: {
+        type: String,
+        enum: languages,
+        default: function () {
+            // Check if user role is TEACHER
+            if (this.role === 'TEACHER') return "uz";
         }
     },
     ratings: {

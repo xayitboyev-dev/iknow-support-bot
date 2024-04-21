@@ -48,19 +48,19 @@ exports.singleTeacher = () => Markup.keyboard([
 ]).resize();
 
 exports.selectTime = (lessons) => {
-    const buttons = [["◀️ Bekor qilish"]];
+    const buttons = [];
     let row = [];
 
     times.forEach((time, index) => {
         row.push(lessons.find(item => item.time === time) ? `${time} 🔴` : `${time} 🟡`);
 
         if (row.length >= 3 || index === times.length - 1) {
-            buttons.unshift(row);
+            buttons.push(row);
             row = [];
         };
     });
 
-    return Markup.keyboard(buttons).resize();
+    return Markup.keyboard([...buttons, ["◀️ Bekor qilish"]]).resize();
 };
 
 exports.cancel = Markup.keyboard([

@@ -1,4 +1,5 @@
 const { model, Schema } = require('mongoose');
+const { branches } = require("../config/config.json");
 
 const lessonSchema = new Schema({
     user: {
@@ -20,6 +21,11 @@ const lessonSchema = new Schema({
         type: String,
         enum: ["pending", "rejected", "cancelled", "confirmed", "finished"],
         default: "pending"
+    },
+    branch: {
+        type: String,
+        enum: branches,
+        default: branches[0]
     },
     date: {
         type: String,

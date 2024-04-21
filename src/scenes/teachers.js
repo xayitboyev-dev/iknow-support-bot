@@ -1,13 +1,14 @@
 const { Scenes: { BaseScene } } = require('telegraf');
 const scene = new BaseScene('teachers');
 const { teachers } = require('../keyboards/button');
+const getRating = require("../utils/getRating");
 const User = require("../models/User");
 
 scene.enter(async (ctx) => {
     try {
-        const users = await User.find({ role: "TEACHER", id: { $ne: null }, active: true }).select("full_name ielts id").lean();
+        const users = await User.find({ role: "TEACHER", id: { $ne: null }, active: true }).select("full_name ielts id ratings").lean();
 
-        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.full_name + " " + (item.ielts.length > 1 ? item.ielts : item.ielts + ".0") }));
+        ctx.scene.state.teachers = users.map((item) => ({ _id: item._id, id: item.id, name: item.full_name +  " ⭐️ " + getRating(item.ratings) }));
 
         ctx.reply("🧑‍🏫 Ustoz tanlang:", teachers(ctx.scene.state.teachers));
     } catch (error) {

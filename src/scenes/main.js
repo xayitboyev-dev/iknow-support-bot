@@ -1,9 +1,6 @@
-const onTeacherRequestAction = require("../handlers/onTeacherRequestAction");
 const { Scenes: { BaseScene } } = require("telegraf");
-const onDeleteLessonAction = require("../handlers/onDeleteLessonAction");
 const { main, teacherMain } = require("../keyboards/button");
 const { oneLesson, deleteLesson } = require("../keyboards/inline");
-const onLessonAction = require("../handlers/onLessonAction");
 const teacherAuth = require("../middlewares/teacherAuth");
 const userAuth = require("../middlewares/userAuth");
 const auth = require("../middlewares/auth");
@@ -41,7 +38,7 @@ scene.hears("🔖 Darslar", userAuth, async (ctx) => {
         };
 
         lessons.forEach((lesson) => {
-            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.full_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n🏫 Filial: ${lesson.teacher.branch}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
+            ctx.replyWithHTML(`🧑‍🏫 Ustoz ismi: ${lesson.teacher.full_name}\n☎️ Telefon: ${lesson.teacher.phone || "Unknown"}\n📍 Filial: ${lesson.branch}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}\n\nUshbu darsda sizni kutib qolamiz 😊`, deleteLesson(lesson._id));
         });
     } catch (error) {
         ctx.reply("Error: " + error.message);
@@ -58,7 +55,7 @@ scene.hears("🔖 Qabul qilingan darslar", teacherAuth, async (ctx) => {
         };
 
         lessons.forEach((lesson) => {
-            ctx.replyWithHTML(`👤 O'quvchi ismi: ${lesson.user.full_name}\n🎓 Daraja: ${lesson.user.level || "Unknown"}\n☎️ Telefon: ${lesson.user.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📃 Mavzu: ${lesson.topic}`, oneLesson(lesson._id));
+            ctx.replyWithHTML(`👤 O'quvchi ismi: ${lesson.user.full_name}\n🎓 Daraja: ${lesson.user.level || "Unknown"}\n☎️ Telefon: ${lesson.user.phone || "Unknown"}\n📅 Sana: ${lesson.date}\n🕔 Vaqt: ${lesson.time}\n📍 Filial: ${lesson.branch}\n📃 Mavzu: ${lesson.topic}`, oneLesson(lesson._id));
         });
     } catch (error) {
         ctx.reply("Error: " + error.message);

@@ -12,7 +12,7 @@ scene.enter(async (ctx) => {
     try {
         const teacher = await User.findById(ctx.scene.state._id);
 
-        ctx.replyWithPhoto(teacher.image, { ...singleTeacher(), caption: `<b>👤 Ism:</b> ${teacher.full_name}\n🔖 IELTS Score: ${teacher.ielts}\n🏫 Filial: ${teacher.branch}\n⭐️ Reyting: ${getRating(teacher.ratings)}\n\nUstozning darsiga yozilishni istasangiz o'zingizga mos keladigan sanani tanlang. (3 ish kuni)`, parse_mode: "HTML" });
+        ctx.replyWithPhoto(teacher.image, { ...singleTeacher(), caption: `<b>👤 Ism:</b> ${teacher.full_name}\n🔖 IELTS Score: ${teacher.ielts}\n⭐️ Reyting: ${getRating(teacher.ratings)}\n🗣 Tili: ${teacher.language == "uz" ? "🇺🇿" : teacher.language == "ru" ? "🇷🇺" : "🇺🇿, 🇷🇺"}\n\nUstozning darsiga yozilishni istasangiz o'zingizga mos keladigan sanani tanlang. (3 ish kuni)`, parse_mode: "HTML" });
     } catch (error) {
         ctx.reply(error.message);
     };

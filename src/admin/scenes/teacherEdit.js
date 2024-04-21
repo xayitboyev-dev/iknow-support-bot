@@ -1,6 +1,6 @@
 const { Scenes: { WizardScene }, Markup } = require('telegraf');
 const User = require("../../models/User");
-const { branches } = require("../../config/config.json");
+const { languages } = require("../../config/config.json");
 
 const steps = [
     (ctx) => {
@@ -11,7 +11,7 @@ const steps = [
         if (ctx.message?.text) {
             ctx.scene.state.full_name = ctx.message.text;
 
-            ctx.reply("Filial kiriting.", Markup.keyboard(branches).resize());
+            ctx.reply("Tilini tanlang.", Markup.keyboard(languages).resize());
             ctx.wizard.next();
         } else {
             ctx.reply("❗️ Iltimos ism va familiyani faqat harflarda kiriting.");
@@ -19,12 +19,12 @@ const steps = [
     },
     (ctx) => {
         if (ctx.message?.text) {
-            ctx.scene.state.branch = ctx.message.text;
+            ctx.scene.state.language = ctx.message.text;
 
             ctx.reply("Ielts score kiriting. (example: 7.5)", Markup.keyboard([ctx.scene.state.teacher.ielts]).resize());
             ctx.wizard.next();
         } else {
-            ctx.reply("❗️ Iltimos branchi quyidagi tugmalardan tanlang.");
+            ctx.reply("❗️ Iltimos tilni quyidagi tugmalardan tanlang.");
         };
     },
     (ctx) => {
