@@ -25,10 +25,8 @@ bot.action(/^request_confirm_(.+)|request_cancel_(.+)$/, onRequestAction);
 // check is the bot update from a user 
 bot.use(checkUser);
 
-// use middlewares
-bot.use(session());
-bot.use(stage
-    .on("my_chat_member", onBlocked)
+// handle some function on stage
+stage.on("my_chat_member", onBlocked)
     .hears("🔙 Bekor qilish", (ctx) => ctx.scene.enter("admin:main"))
     .hears(["◀️ Bekor qilish", "⏪ Orqaga"], (ctx) => ctx.scene.enter("main"))
     .action(/^rate_(.+)_(.+)$/, onRate) // rating action
@@ -36,9 +34,11 @@ bot.use(stage
     .action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, auth, teacherAuth, onLessonAction) // lesson finish or reject action for teacher
     .action(/^delete_lesson_(.+)$/, auth, userAuth, onDeleteLessonAction) // delete lesson action for user
     .command("admin", (ctx) => ctx.scene.enter("admin:main"))
-    .command("teacher", (ctx) => ctx.scene.enter("teacher:register"))
-    .middleware()
-);
+    .command("teacher", (ctx) => ctx.scene.enter("teacher:register"));
+
+// use middlewares
+bot.use(session());
+bot.use(stage.middleware());
 
 // run bot
 if (process.env.NODE_ENV === 'production') {
