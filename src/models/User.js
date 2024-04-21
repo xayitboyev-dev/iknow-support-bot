@@ -39,16 +39,17 @@ const userSchema = new Schema({
         type: String,
         enum: ["activated", "pending"],
         default: function () {
-            // Check if user role is TEACHER
+            // Check if user role is USER
             if (this.role === 'USER') return "pending";
         }
     },
     ratings: {
         type: Object,
-        default: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 5 }
+        default: function () {
+            // Check if user role is TEACHER
+            if (this.role === 'TEACHER') return { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 2 };
+        }
     }
 });
-
-
 
 module.exports = model('user', userSchema);

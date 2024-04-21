@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
-    "cluster": "node ./src/cluster.js"
+    "cluster": "node ./src/cluster.js",
+    "pm2single": "pm2 start npm --name iknow-support -- start"
   },
   "author": "Ozodbek Khayitboyev",
   "license": "ISC",

@@ -30,13 +30,13 @@ module.exports = async (ctx) => {
 
             if (!lesson) throw new Error("Lesson not found!");
 
-            await User.findByIdAndUpdate(ctx.state.user._id, { $inc: { "ratings.1": 1 } });
+            // await User.findByIdAndUpdate(ctx.state.user._id, { $inc: { "ratings.1": 1 } }); // Rating downgrade
 
             // send the product to the user
             ctx.telegram.sendMessage(lesson.user.id, `⛔️ Afsuski qabulga so'rovingiz rad etildi. Boshqa ustozning qabuliga yozilishingiz mumkin!`);
 
             // delete this message
-            ctx.editMessageText("⛔️ Rad etildi. Eslatib o'tamiz har bir rad etganingiz uchun reyting pasayadi!");
+            ctx.editMessageText("⛔️ Rad etildi.");
 
             ctx.answerCbQuery("Bekor qilindi ⛔️");
         };

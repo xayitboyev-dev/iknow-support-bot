@@ -18,7 +18,7 @@ scene.on(["text", "contact"], async (ctx) => {
 
         if (!ctx.message.text || parseInt(ctx.message.text)) {
             if (user) {
-                await User.findByIdAndUpdate(user._id, { id: ctx.from.id }, { new: true });
+                await User.findByIdAndUpdate(user._id, { id: ctx.from.id, active: true }, { new: true });
                 await ctx.reply("✅ Ma'lumotlaringiz to'g'ri. Botdan foydalanishingiz mumkin.");
                 ctx.scene.enter("main");
             } else {

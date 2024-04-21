@@ -25,24 +25,16 @@ bot.action(/^request_confirm_(.+)|request_cancel_(.+)$/, onRequestAction);
 // check is the bot update from a user 
 bot.use(checkUser);
 
-// on rate teacher action
-bot.action(/^rate_(.+)_(.+)$/, onRate);
-
-// teacher request action for teacher
-bot.action(/^accept_lesson_(.+)|deny_lesson_(.+)$/, auth, teacherAuth, onTeacherRequestAction);
-
-// lesson finish or reject action for teacher
-bot.action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, auth, teacherAuth, onLessonAction);
-
-// delete lesson action for user
-bot.action(/^delete_lesson_(.+)$/, auth, userAuth, onDeleteLessonAction);
-
 // use middlewares
 bot.use(session());
 bot.use(stage
     .on("my_chat_member", onBlocked)
     .hears("🔙 Bekor qilish", (ctx) => ctx.scene.enter("admin:main"))
     .hears(["◀️ Bekor qilish", "⏪ Orqaga"], (ctx) => ctx.scene.enter("main"))
+    .action(/^rate_(.+)_(.+)$/, onRate) // rating action
+    .action(/^accept_lesson_(.+)|deny_lesson_(.+)$/, auth, teacherAuth, onTeacherRequestAction) // teacher request action for teacher
+    .action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, auth, teacherAuth, onLessonAction) // lesson finish or reject action for teacher
+    .action(/^delete_lesson_(.+)$/, auth, userAuth, onDeleteLessonAction) // delete lesson action for user
     .command("admin", (ctx) => ctx.scene.enter("admin:main"))
     .command("teacher", (ctx) => ctx.scene.enter("teacher:register"))
     .middleware()

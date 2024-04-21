@@ -21,4 +21,5 @@ exports.deleteLesson = (id) => Markup.inlineKeyboard([
 
 exports.rate = (teacherId) => Markup.inlineKeyboard([
     [Markup.button.callback("⭐ 1", `rate_${teacherId}_1`), Markup.button.callback("⭐ 2", `rate_${teacherId}_2`), Markup.button.callback("⭐ 3", `rate_${teacherId}_3`), Markup.button.callback("⭐ 4", `rate_${teacherId}_4`), Markup.button.callback("⭐ 5", `rate_${teacherId}_5`)],
+    [Markup.button.callback("⭐ 6", `rate_${teacherId}_6`), Markup.button.callback("⭐ 7", `rate_${teacherId}_7`), Markup.button.callback("⭐ 8", `rate_${teacherId}_8`), Markup.button.callback("⭐ 9", `rate_${teacherId}_9`), Markup.button.callback("⭐ 10", `rate_${teacherId}_10`)],
 ]);

@@ -19,13 +19,13 @@ exports.teacherSettings = Markup.keyboard([
 ]).resize();
 
 exports.settingsUpdateLevel = Markup.keyboard([
-    "◀️ Bekor qilish",
-    ...levels
+    ...levels,
+    "◀️ Bekor qilish"
 ]).resize();
 
 exports.settingsUpdatePhone = Markup.keyboard([
-    "◀️ Bekor qilish",
-    Markup.button.contactRequest("☎️ Telefon raqamni yuborish")
+    Markup.button.contactRequest("☎️ Telefon raqamni yuborish"),
+    "◀️ Bekor qilish"
 ]).resize();
 
 exports.splash = Markup.keyboard([
@@ -39,10 +39,13 @@ exports.teacherMain = Markup.keyboard([
 
 exports.teachers = (teachers) => Markup.keyboard([
     ["⏪ Orqaga"],
-    ...teachers.map((item) => [item.name])
+    ...teachers.map((item) => [item.name]),
 ]).resize();
 
-exports.singleTeacher = () => Markup.keyboard([["◀️ Bekor qilish"], getDates().map(item => item.date)]).resize();
+exports.singleTeacher = () => Markup.keyboard([
+    getDates().map(item => item.date),
+    ["◀️ Bekor qilish"]
+]).resize();
 
 exports.selectTime = (lessons) => {
     const buttons = [["◀️ Bekor qilish"]];
@@ -52,7 +55,7 @@ exports.selectTime = (lessons) => {
         row.push(lessons.find(item => item.time === time) ? `${time} 🔴` : `${time} 🟡`);
 
         if (row.length >= 3 || index === times.length - 1) {
-            buttons.push(row);
+            buttons.unshift(row);
             row = [];
         };
     });
@@ -83,3 +86,7 @@ exports.phone = Markup.keyboard([
 ]).resize();
 
 exports.levels = Markup.keyboard(levels).resize();
+
+exports.review = Markup.keyboard([
+    ["Tashlab ketish ➡️"]
+]).resize();
