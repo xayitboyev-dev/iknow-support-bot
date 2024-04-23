@@ -25,7 +25,7 @@ scene.hears("⚙️ Sozlamalar", (ctx) => {
 });
 
 // action for basic users
-scene.hears("✏️ Darsga yozilish", userAuth, (ctx) => {
+scene.hears(["✏️ Darsga yozilish", "/book"], userAuth, (ctx) => {
     ctx.scene.enter("teachers");
 });
 
@@ -60,6 +60,10 @@ scene.hears("🔖 Qabul qilingan darslar", teacherAuth, async (ctx) => {
     } catch (error) {
         ctx.reply("Error: " + error.message);
     };
+});
+
+scene.hears("🕔 Band vaqtlaringizni sozlash", teacherAuth, (ctx) => {
+    ctx.scene.enter("teacher:break:selectDate");
 });
 
 // action for basic users

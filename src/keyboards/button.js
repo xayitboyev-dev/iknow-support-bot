@@ -34,6 +34,7 @@ exports.splash = Markup.keyboard([
 
 exports.teacherMain = Markup.keyboard([
     "🔖 Qabul qilingan darslar",
+    "🕔 Band vaqtlaringizni sozlash",
     "⚙️ Sozlamalar"
 ]).resize();
 
@@ -47,12 +48,14 @@ exports.singleTeacher = () => Markup.keyboard([
     ["◀️ Bekor qilish"]
 ]).resize();
 
-exports.selectTime = (lessons) => {
+exports.selectTime = (lessons, teacher) => {
     const buttons = [];
     let row = [];
 
     times.forEach((time, index) => {
-        row.push(lessons.find(item => item.time === time) ? `${time} 🔴` : `${time} 🟡`);
+        const lesson = lessons.find(item => item.time === time);
+
+        row.push(lesson ? `${time} ${lesson.type === "break" && teacher ? "🟠" : "🔴"}` : `${time} 🟡`);
 
         if (row.length >= 3 || index === times.length - 1) {
             buttons.push(row);

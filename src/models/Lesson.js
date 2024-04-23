@@ -2,6 +2,10 @@ const { model, Schema } = require('mongoose');
 const { branches } = require("../config/config.json");
 
 const lessonSchema = new Schema({
+    type: {
+        type: String,
+        enum: ["break", "lesson"]
+    },
     user: {
         type: Schema.Types.ObjectId,
         required: true,

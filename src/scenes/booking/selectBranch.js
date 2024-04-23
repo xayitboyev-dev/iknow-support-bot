@@ -6,7 +6,7 @@ const Lesson = require("../../models/Lesson");
 
 scene.enter(async (ctx) => {
     try {
-        ctx.reply("Yaxshi, endi o'zingiz istagan filialni tanlang.", Markup.keyboard([...branches, "◀️ Bekor qilish"]).resize());
+        ctx.reply("Yaxshi, endi o'zingizga qulay joylashuvni tanlang.", Markup.keyboard([...branches, "◀️ Bekor qilish"]).resize());
     } catch (error) {
         ctx.reply(error.message);
     };

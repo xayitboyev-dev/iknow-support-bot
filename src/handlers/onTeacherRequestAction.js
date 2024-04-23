@@ -1,6 +1,4 @@
 const Lesson = require("../models/Lesson");
-const { main } = require("../keyboards/button");
-const User = require("../models/User");
 
 module.exports = async (ctx) => {
     const data = ctx.match[0];
@@ -39,6 +37,8 @@ module.exports = async (ctx) => {
             ctx.editMessageText("⛔️ Rad etildi.");
 
             ctx.answerCbQuery("Bekor qilindi ⛔️");
+
+            ctx.scene.enter("message", { text: "📝 Darsni nega rad etganingiz haqida o'quvchiga xabar qoldiring.", chatId: lesson.user.id });
         };
     } catch (error) {
         ctx.answerCbQuery(error.message);

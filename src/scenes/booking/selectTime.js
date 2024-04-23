@@ -17,6 +17,8 @@ scene.enter(async (ctx) => {
 
 scene.on("text", auth, async (ctx) => {
     try {
+        ctx.scene.state.lessons = await Lesson.find({ teacher: ctx.scene.state.teacher._id, date: ctx.scene.state.date, status: { $in: ["confirmed", "pending"] } }).select("time").lean();
+
         const time = times.find((item) => item == ctx.message.text.slice(0, 5));
         const exists = ctx.scene.state.lessons.find((item) => item.time == time);
 

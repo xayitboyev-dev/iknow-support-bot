@@ -6,7 +6,7 @@ const getRating = require("../../utils/getRating");
 const User = require("../../models/User");
 const Lesson = require('../../models/Lesson');
 const auth = require("../../middlewares/auth");
-const { maximumBookingPeerDay } = require("../../config/config.json");
+const { maximumBookingPeerDay, maximumLessonsPeerDay } = require("../../config/config.json");
 
 scene.enter(async (ctx) => {
     try {
@@ -24,16 +24,17 @@ scene.on("text", auth, async (ctx) => {
     startOfDay.setHours(0, 0, 0, 0);
 
     try {
-        const countLessons = await Lesson.countDocuments({ user: ctx.state.user?._id, createdAt: { $gte: startOfDay } });
-
-        if (countLessons >= maximumBookingPeerDay) throw new Error(`❗️ Bugun siz ${maximumBookingPeerDay} marta qabulga yozilgansiz, iltimos ertaga qayta uruning.`);
-
         const date = getDates().find((item) => item.date === ctx.message.text);
 
         if (date) {
             if (date.holiday) {
                 ctx.reply("❗️ Biz bu sanada dam olamiz.");
             } else {
+                const results = await Promise.all([Lesson.countDocuments({ user: ctx.state.user?._id, status: { $nin: ["rejected", "finished"] }, createdAt: { $gte: startOfDay } }), Lesson.countDocuments({ type: { $ne: "break" }, status: { $nin: ["rejected", "finished"] }, teacher: ctx.scene.state._id, date: date.date })]);
+
+                if (results[0] >= maximumBookingPeerDay) throw new Error(`❗️ Bugun siz ${maximumBookingPeerDay} marta qabulga yozilgansiz, iltimos ertaga qayta uruning.`);
+                if (results[1] >= maximumLessonsPeerDay) throw new Error(`❗️ ${date.date} sanada o'qituvchimizning hamma vaqti band qilingan. Iltimos boshqa o'qituvchi yoki boshqa sanani tanlang.`);
+
                 ctx.scene.enter("booking:selectTime", { date: date.date, teacher: ctx.scene.state });
             };
         } else {
