@@ -28,11 +28,9 @@ scene.hears("📊 Statistika", async (ctx) => {
     // get info
     const results = await Promise.all([Lesson.count({ status: "finished" }), Lesson.count({ status: "cancelled" }), Lesson.count({ status: "rejected" })]);
 
-    ctx.replyWithHTML(`📊 Statistika\n\nActive userlar: <b>${activeUsers}</b>\nNonActive userlar: <b>${nonActiveUsers
-        
-    }</b>\nBarchasi: <b>${activeUsers + nonActiveUsers}</b>\n\nO'tilgan darslar: ${results[0]}\nRad etilgan darslar: ${results[1]}\nBekor qilingan darslar: ${results[2]}`);
+    ctx.replyWithHTML(`📊 Statistika\n\nActive userlar: <b>${activeUsers}</b>\nNonActive userlar: <b>${nonActiveUsers}</b>\nBarchasi: <b>${activeUsers + nonActiveUsers}</b>\n\nUmumiy o'tilgan darslar: ${results[0]}\nRad etilgan darslar: ${results[1]}\nBekor qilingan darslar: ${results[2]}`);
 });
 
-\n\nO'tilgan darslar: ${results[0]}\nRad etilgan darslar: ${results[1]}\nBekor qilingan darslar: ${results[2]}scene.hears("🏠 Client", (ctx) => ctx.scene.enter("main"));
+scene.hears("🏠 Client", (ctx) => ctx.scene.enter("main"));
 
 module.exports = scene;
