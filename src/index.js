@@ -34,6 +34,7 @@ stage.on("my_chat_member", onBlocked)
     .action(/^finish_lesson_(.+)|reject_lesson_(.+)$/, auth, teacherAuth, onLessonAction) // lesson finish or reject action for teacher
     .action(/^delete_lesson_(.+)$/, auth, userAuth, onDeleteLessonAction) // delete lesson action for user
     .command("admin", (ctx) => ctx.scene.enter("admin:main"))
+    .command("restart", (ctx) => ctx.scene.enter("main"))
     .command("teacher", (ctx) => ctx.scene.enter("teacher:register"));
 
 // use middlewares
