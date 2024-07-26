@@ -25,7 +25,7 @@
         "uz-ru"
     ],
     "maximumBookingPeerDay": 3,
-    "maximumLessonsPeerDay": 3,
+    "maximumLessonsPeerDay": 8,
     "holidays": [
         0,
         6
